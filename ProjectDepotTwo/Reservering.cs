@@ -4,20 +4,14 @@ namespace ProjectDepotTwo
 	public class Reservering
 	{
 		public int Code { get; set; }
-		public string Tijd { get; set; }
+		public DateTime tijd { get; set; }
 		public static int plekkengereserveerd = 13;
 
-		public Reservering()
+		public Reservering(int aCode, DateTime num1)
 		{
-			plekkengereserveerd--;
+			Code = aCode;
+			tijd = num1;
 		}
-
-
-		public override string ToString()
-		{
-			return String.Format("Student Information:\n\tCode: {0}, Tijd: {1} ", Code, Tijd);
-		}
-
 	}
 }
 
