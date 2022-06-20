@@ -49,21 +49,13 @@ namespace ProjectDepotTwo
             }
         }
 
+
         public static int BezoekerMenu()                                       /// bezoekersmenu
         {
             while (true)
             {
-                LeegPagina();
-                Console.WriteLine("Bezoeker\n\n[1] om een reservering te maken \n[0] om terug te gaan ");
-
-                string invoerbezoeker = Console.ReadLine();
-                switch (invoerbezoeker)
                 {
-
-                    case "0":
-                        return 0;
-
-                    case "1":
+            
                         LeegPagina();
 
                         var dateNu = DateTime.Now;
@@ -170,13 +162,9 @@ namespace ProjectDepotTwo
                             Console.WriteLine("Code onjuist, toets [Enter] om terug te gaan !");
                             Console.ReadLine();
                         }
-                        break;
-
-                    default:
-                        Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
-                        Console.ReadLine();
-                        break;
-
+                    return 0;
+                
+               
                 }
             }
         }
@@ -186,12 +174,13 @@ namespace ProjectDepotTwo
             while (true)
             {
                 LeegPagina();
-                Console.WriteLine("Gids\n\n[0] om terug te gaan naar het start menu\n[1] om een rondleiding te starten van 11 uur\n[2] om een overzicht te zien van de reserveringen");
+                Console.WriteLine("[1] om een rondleiding te starten van 11 uur\n[2] om een overzicht te zien van de reserveringen");
                 string invoergids = Console.ReadLine();
 
                 switch (invoergids)
                 {
                     case "1":
+                        LeegPagina();
                         var Vandaag = DateTime.Today;
                         var reservering11uur = Vandaag.AddHours(11);
                         var reservering12uur = Vandaag.AddHours(12);
@@ -220,17 +209,17 @@ namespace ProjectDepotTwo
                             var yeahtijd = LijstVanReserveringen1[indexcode].tijd;
                             if (yeahtijd == reservering11uur)
                             {
-                                Console.WriteLine("Je mag een labjas"); 
+                                Console.WriteLine("Je mag een labjas, klik  [Enter] om verder te gaan"); 
                             }
                             else
                             {
-                                Console.WriteLine("je mag geen labjas");
+                                Console.WriteLine("je mag geen labjas, klik [Enter] om verder te gaan");
                             }
                         }
 
                         if (indexcode < 0)
                         {
-                            Console.WriteLine("je mag geen labjas");
+                            Console.WriteLine("je mag geen labjas, klik [Enter] om verder te gaan ");
                         }
                         Console.ReadLine();
 
@@ -251,16 +240,11 @@ namespace ProjectDepotTwo
                             Console.WriteLine("--------------");
                         }
 
-
-
-                        Console.WriteLine("[0] om terug te gaan");
-
-
+                        Console.WriteLine("toets [Enter] om terug te gaan");
                         Console.ReadLine();
 
                         break;
-                    case "0":
-                        return 0;
+
                     default:
                         Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
                         Console.ReadLine();
@@ -338,7 +322,6 @@ namespace ProjectDepotTwo
             var huidigelijst = File.ReadAllText(@"reservering.Json");
             var Reserveringenvoorcount = JsonConvert.DeserializeObject<List<Reservering>>(huidigelijst);
 
-            var bezoekerslimit = 13;
             var bezoekerslimit11uur = 13;
             var bezoekerslimit12uur = 13;
             var bezoekerslimit13uur = 13;
@@ -401,6 +384,8 @@ namespace ProjectDepotTwo
         }
     }
 }
+
+
 
 
 
