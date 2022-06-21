@@ -19,30 +19,29 @@ namespace ProjectDepotTwo
 
 		public void BezoekersMenu()
 		{
+			
 			using (StreamReader r = new StreamReader(@"Rondleidingen.json"))
 			{
 				string json = r.ReadToEnd();
 				LijstRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(json);
 
 			}
-
+			
 			using (StreamReader r = new StreamReader(@"Reserveringen.json"))
 			{
 				string json = r.ReadToEnd();
 				LijstReserveringen = JsonConvert.DeserializeObject<List<Reservering>>(json);
 			}
+			
 
 			while (true)
 			{
 				Console.Clear();
-				Console.WriteLine("Bezoeker\n\n[1] om een reservering te maken \n[0] om terug te gaan");
+				Console.WriteLine("Bezoeker\n\n[1] om een reservering te maken.");
 
 				string invoerbezoeker = Console.ReadLine();
 				switch (invoerbezoeker)
 				{
-					case "0":
-						break;
-
 					case "1":
 						Console.Clear();
 						var dateNu = DateTime.Now;
@@ -56,12 +55,11 @@ namespace ProjectDepotTwo
 							Console.WriteLine($"[{nummer}] Rondleiding van {rondleiding.tijd} || plekken vrij {rondleiding.capaciteit - reserveringenC}");
 						}
 
-						// invoeren code
 						Console.WriteLine("Selecteer de rondleiding naar keuze ");
 						int num1 = Convert.ToInt32(Console.ReadLine());
 
 						Console.Clear();
-						Console.WriteLine("Door u geselecteerd : Check(num1-1).tijd)");
+						Console.WriteLine("Door u geselecteerd :" + Check(num1-1).tijd);
 						Console.WriteLine("\nVoer uw unieke ticket code in");
 
 						int Acode = Convert.ToInt32(Console.ReadLine());
@@ -77,10 +75,12 @@ namespace ProjectDepotTwo
 								{
 									Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(num1 - 1).tijd));
 									LijstReserveringen.Add(reserveringdepot);
+
 									Console.Clear();
 									Console.WriteLine("Opgeslagen, toets [Enter] om terug te gaan");
 									Console.ReadLine();
 								}
+								
 
 								else
 								{
@@ -89,7 +89,7 @@ namespace ProjectDepotTwo
 
 								}
 
-							}
+							} 
 							else
 							{
 								Console.WriteLine($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}.");
@@ -97,7 +97,6 @@ namespace ProjectDepotTwo
 							}
 
 						}
-
 						else
 						{
 							Console.WriteLine($"Code is niet geldig, toets [enter] om terug te gaan ");
@@ -108,20 +107,19 @@ namespace ProjectDepotTwo
 					default:
 						Console.WriteLine("invoer onjuist , selecteer een van bovenstaande opties aub");
 						break;
-
-
 				}
 
+	
 				using (StreamWriter file = File.CreateText(@"rondleidingen.json"))
 				{
 					JsonSerializer serializer = new JsonSerializer();
 					serializer.Serialize(file, LijstRondleidingen);
 				}
 
-				using (StreamWriter file = File.CreateText(@"reseveringen.json"))
+				using (StreamWriter file = File.CreateText(@"reserveringen.json"))
 				{
 					JsonSerializer serializer = new JsonSerializer();
-					serializer.Serialize(file, LijstRondleidingen);
+					serializer.Serialize(file, LijstReserveringen);
 				}
 			}
 		}
@@ -156,9 +154,7 @@ namespace ProjectDepotTwo
 				rondleidingen[i] = rondleiding;
 				i++;
             }
-
 			return rondleidingen[tijdoptie];
-				
         }
 	}
 }

@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace ProjectDepotTwo
 {
     class Program
     {
-        static void Main(string []args)
+        static void Main(string[] args)
         {
             Bezoeker bezoeker = new Bezoeker();
             Gids gids = new Gids();
 
-
-
-
-            gids.GidsMenu();
-            //bezoeker.BezoekersMenu();
-
-
-       
+            bezoeker.BezoekersMenu();
+            //gids.GidsMenu();
         }
     }
 }
+
+
 
        
 

@@ -65,7 +65,6 @@ namespace ProjectDepotTwo
 								{
 									Console.WriteLine($"\nOnjuist code, code bestaat niet\nDruk op enter om een andere code te proberen");
 								}
-
 								Console.ReadLine();
 
 							}
