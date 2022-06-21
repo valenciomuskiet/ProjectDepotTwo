@@ -10,8 +10,13 @@ namespace ProjectDepotTwo
         static void Main(string []args)
         {
             Bezoeker bezoeker = new Bezoeker();
-            bezoeker.BezoekersMenu();
-                
+            Gids gids = new Gids();
+
+
+
+
+            gids.GidsMenu();
+            //bezoeker.BezoekersMenu();
 
 
        
