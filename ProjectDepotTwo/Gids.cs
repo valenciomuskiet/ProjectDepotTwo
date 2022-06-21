@@ -10,7 +10,7 @@ namespace ProjectDepotTwo
 	{
 		Bezoeker bezoeker = new Bezoeker();
 
-		public void GidsMenu()
+		public int GidsMenu()
         {
 			using (StreamReader r = new StreamReader(@"Rondleidingen.json"))
 			{
@@ -40,7 +40,7 @@ namespace ProjectDepotTwo
 							{
 								Console.Clear();
 								Console.WriteLine($"Rondleiding van {check.tijd} starten..");
-								Console.WriteLine("Vul de codes in voor deze rondleiding: \nOm uit dit menu ");
+								Console.WriteLine("Vul de codes in voor deze rondleiding: \nklik 123 Om uit dit menu ");
 								string input = Console.ReadLine();
 								bool succesvolParsed = int.TryParse(input, out int e);
 								while (succesvolParsed != true)
@@ -50,7 +50,7 @@ namespace ProjectDepotTwo
 									succesvolParsed = int.TryParse(input, out e);
 								}
 
-								if (e == 1)
+								if (e == 123)
 								{
 									break;
 								}
@@ -66,9 +66,7 @@ namespace ProjectDepotTwo
 									Console.WriteLine($"\nOnjuist code, code bestaat niet\nDruk op enter om een andere code te proberen");
 								}
 								Console.ReadLine();
-
 							}
-
 						}
 						else
 						{
@@ -101,8 +99,12 @@ namespace ProjectDepotTwo
 						Console.WriteLine("invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
 
 						break;
+
+
+
 				
 				}
+				return 0;
 								
 			}
 

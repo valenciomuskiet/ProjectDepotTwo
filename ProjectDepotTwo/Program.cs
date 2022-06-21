@@ -8,23 +8,61 @@ namespace ProjectDepotTwo
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Bezoeker bezoeker = new Bezoeker();
-            Gids gids = new Gids();
 
-            bezoeker.BezoekersMenu();
-            //gids.GidsMenu();
+
+        Bezoeker bezoeker = new Bezoeker();
+        Gids gids = new Gids();
+
+        static void Main()
+        {
+            int Pagina = 0;
+            while (Pagina != -1)
+            {
+
+
+                Bezoeker bezoeker = new Bezoeker();
+                Gids gids = new Gids();
+
+                switch (Pagina)                                                 /// Switch statement voor de menu's
+                {
+                    case 0:
+                        Pagina = StartMenuDepot();
+                        break;
+                    case 1:
+                        Pagina = bezoeker.BezoekersMenu();
+                        break;
+                    case 2:
+                        Pagina = gids.GidsMenu();
+                        break;
+                }
+            }
+        }
+
+
+
+        private static int StartMenuDepot()                                     /// Startmenu 
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Het Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids");
+
+                string invoergebruiker = Console.ReadLine();
+                switch (invoergebruiker)
+                {
+                    case "1":
+                        return 1;
+                    case "2":
+                        return 2;
+                    default:
+                        Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
+                        Console.ReadLine();
+                        break;
+                }
+            }
         }
     }
 }
-
-
-
-       
-
-
-
 
 
 

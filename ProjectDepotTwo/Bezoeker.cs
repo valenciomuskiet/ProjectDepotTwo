@@ -17,7 +17,7 @@ namespace ProjectDepotTwo
 			LijstReserveringen = new List<Reservering>();
 		}
 
-		public void BezoekersMenu()
+		public int BezoekersMenu()
 		{
 			
 			using (StreamReader r = new StreamReader(@"Rondleidingen.json"))
@@ -121,8 +121,11 @@ namespace ProjectDepotTwo
 					JsonSerializer serializer = new JsonSerializer();
 					serializer.Serialize(file, LijstReserveringen);
 				}
+				return 0;
 			}
+			
 		}
+		
 
 		static bool CodeControle(int code)
 		{
@@ -156,6 +159,12 @@ namespace ProjectDepotTwo
             }
 			return rondleidingen[tijdoptie];
         }
+
+
+
+
+
+
 	}
 }
 
