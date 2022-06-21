@@ -8,18 +8,11 @@ namespace ProjectDepotTwo
 {
     class Program
     {
-
-
-        Bezoeker bezoeker = new Bezoeker();
-        Gids gids = new Gids();
-
         static void Main()
         {
             int Pagina = 0;
             while (Pagina != -1)
             {
-
-
                 Bezoeker bezoeker = new Bezoeker();
                 Gids gids = new Gids();
 
@@ -37,7 +30,6 @@ namespace ProjectDepotTwo
                 }
             }
         }
-
 
 
         private static int StartMenuDepot()                                     /// Startmenu 

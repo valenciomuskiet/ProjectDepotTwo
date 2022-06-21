@@ -37,9 +37,8 @@ namespace ProjectDepotTwo
 			while (true)
 			{
 				Console.Clear();
-				Console.WriteLine("Bezoeker\n\n[1] om een reservering te maken.");
 
-				string invoerbezoeker = Console.ReadLine();
+				string invoerbezoeker = "1";
 				switch (invoerbezoeker)
 				{
 					case "1":
@@ -48,21 +47,42 @@ namespace ProjectDepotTwo
 						Console.WriteLine("Huidige datum: " + dateNu + "\n");
 
 						int nummer = 1;
-
 						foreach (Rondleiding rondleiding in LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
 						{
 							int reserveringenC = LijstReserveringen.Where(x => x.tijd == rondleiding.tijd).Count();
 							Console.WriteLine($"[{nummer}] Rondleiding van {rondleiding.tijd} || plekken vrij {rondleiding.capaciteit - reserveringenC}");
+							nummer++;
 						}
 
 						Console.WriteLine("Selecteer de rondleiding naar keuze ");
-						int num1 = Convert.ToInt32(Console.ReadLine());
+
+						string Anum1 = Console.ReadLine();
+						bool succesvolParsedc = int.TryParse(Anum1, out int num1);
+						while (succesvolParsedc != true)
+                        {
+							Console.WriteLine("Uw invoer is niet correct, vul afstublieft een code in bestaand uit cijfers");
+							Anum1 = Console.ReadLine();
+							succesvolParsedc = int.TryParse(Anum1, out num1);
+						}
+
 
 						Console.Clear();
 						Console.WriteLine("Door u geselecteerd :" + Check(num1-1).tijd);
 						Console.WriteLine("\nVoer uw unieke ticket code in");
 
-						int Acode = Convert.ToInt32(Console.ReadLine());
+
+
+
+						string Acode1 = Console.ReadLine();
+						bool succesvolParsedb = int.TryParse(Acode1, out int Acode);
+						while (succesvolParsedb != true)
+                        {
+							Console.WriteLine("Uw invoer is niet correct, vul afstublieft een code in bestaand uit cijfers");
+							Acode1 = Console.ReadLine();
+							succesvolParsedb = int.TryParse(Acode1, out Acode);
+						}
+
+
 						bool returnvalue = (CodeControle(Acode));
 
 						var checkCodeLijst = LijstReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
@@ -80,7 +100,6 @@ namespace ProjectDepotTwo
 									Console.WriteLine("Opgeslagen, toets [Enter] om terug te gaan");
 									Console.ReadLine();
 								}
-								
 
 								else
 								{
@@ -92,7 +111,7 @@ namespace ProjectDepotTwo
 							} 
 							else
 							{
-								Console.WriteLine($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}.");
+								Console.WriteLine($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Klik [Enter] om terug te gaan naar de startpagina ");
 								Console.ReadLine();
 							}
 
@@ -125,7 +144,6 @@ namespace ProjectDepotTwo
 			}
 			
 		}
-		
 
 		static bool CodeControle(int code)
 		{
@@ -159,12 +177,6 @@ namespace ProjectDepotTwo
             }
 			return rondleidingen[tijdoptie];
         }
-
-
-
-
-
-
 	}
 }
 

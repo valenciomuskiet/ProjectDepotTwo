@@ -40,7 +40,7 @@ namespace ProjectDepotTwo
 							{
 								Console.Clear();
 								Console.WriteLine($"Rondleiding van {check.tijd} starten..");
-								Console.WriteLine("Vul de codes in voor deze rondleiding: \nklik 123 Om uit dit menu ");
+								Console.WriteLine("Vul de codes in voor deze rondleiding: \ntoets [000] Om uit dit menu ");
 								string input = Console.ReadLine();
 								bool succesvolParsed = int.TryParse(input, out int e);
 								while (succesvolParsed != true)
@@ -50,20 +50,22 @@ namespace ProjectDepotTwo
 									succesvolParsed = int.TryParse(input, out e);
 								}
 
-								if (e == 123)
+								if (e == 000)
 								{
 									break;
 								}
-
 								else if (bezoeker.LijstReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour) != null)
 								{
 									Console.WriteLine("Je mag een labjas\n Druk op [ENTER] voor de volgende");
-									Console.ReadLine();
 								}
-
+								else if (bezoeker.LijstReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour != DateTime.Now.Hour) != null)
+                                {
+									Console.WriteLine("Code is gebruikt voor een andere rondleiding, klik enter om het opnieuw te proberen");
+								}
+										
 								else
 								{
-									Console.WriteLine($"\nOnjuist code, code bestaat niet\nDruk op enter om een andere code te proberen");
+									Console.WriteLine($"\nDruk op enter om een andere code te proberen");
 								}
 								Console.ReadLine();
 							}
@@ -99,9 +101,6 @@ namespace ProjectDepotTwo
 						Console.WriteLine("invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
 
 						break;
-
-
-
 				
 				}
 				return 0;
