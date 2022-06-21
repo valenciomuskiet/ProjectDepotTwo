@@ -44,7 +44,7 @@ namespace ProjectDepotTwo
 					case "1":
 						Console.Clear();
 						var dateNu = DateTime.Now;
-						Console.WriteLine("Huidige datum: " + dateNu + "\n");
+                        Console.WriteLine("Huidige datum: " + dateNu + "\n");
 
 						int nummer = 1;
 						foreach (Rondleiding rondleiding in LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
@@ -54,13 +54,13 @@ namespace ProjectDepotTwo
 							nummer++;
 						}
 
-						Console.WriteLine("Selecteer de rondleiding naar keuze ");
+						Console.WriteLine("Selecteer een rondleiding naar keuze doet het weer");
 
 						string Anum1 = Console.ReadLine();
 						bool succesvolParsedc = int.TryParse(Anum1, out int num1);
 						while (succesvolParsedc != true)
                         {
-							Console.WriteLine("Uw invoer is niet correct, vul afstublieft een code in bestaand uit cijfers");
+							Console.WriteLine("Vul een code in bestaand uit cijfers a.u.b.");
 							Anum1 = Console.ReadLine();
 							succesvolParsedc = int.TryParse(Anum1, out num1);
 						}

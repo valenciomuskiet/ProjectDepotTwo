@@ -37,7 +37,7 @@ namespace ProjectDepotTwo
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Het Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids");
+                Console.WriteLine(" Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids");
 
                 string invoergebruiker = Console.ReadLine();
                 switch (invoergebruiker)
@@ -55,9 +55,6 @@ namespace ProjectDepotTwo
         }
     }
 }
-
-
-
 /*
 
                 }
