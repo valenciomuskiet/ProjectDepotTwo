@@ -6,144 +6,146 @@ using Newtonsoft.Json;
 
 namespace ProjectDepotTwo
 {
-	public class Bezoeker
+	public class ApplicatieComponentBezoeker
 	{
-		public List<Rondleiding> LijstRondleidingen { get; set; }
-		public List<Reservering> LijstReserveringen { get; set; }
+		public List<Rondleiding> LijstVanRondleidingen { get; set; }
+		public List<Reservering> LijstVanReserveringen { get; set; }
 
-		public Bezoeker()
+
+		public ApplicatieComponentBezoeker()
 		{
-			LijstRondleidingen = new List<Rondleiding>();
-			LijstReserveringen = new List<Reservering>();
+			LijstVanRondleidingen = new List<Rondleiding>();
+			LijstVanReserveringen = new List<Reservering>();
 		}
 
-		public int BezoekersMenu()
+		public int BezoekersMenu()                                                                  
 		{
-			
-			using (StreamReader r = new StreamReader(@"Rondleidingen.json"))
+			using (StreamReader RondleidingenJson = new StreamReader(@"Rondleidingen.json"))
 			{
-				string json = r.ReadToEnd();
-				LijstRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(json);
+				string stringRondleidingen = RondleidingenJson.ReadToEnd();
+				LijstVanRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(stringRondleidingen);
 
 			}
 			
-			using (StreamReader r = new StreamReader(@"Reserveringen.json"))
+			using (StreamReader ReserveringenJson = new StreamReader(@"Reserveringen.json"))
 			{
-				string json = r.ReadToEnd();
-				LijstReserveringen = JsonConvert.DeserializeObject<List<Reservering>>(json);
+				string stringReserveringen = ReserveringenJson.ReadToEnd();
+				LijstVanReserveringen = JsonConvert.DeserializeObject<List<Reservering>>(stringReserveringen);
 			}
-			
+
+
+
+
 
 			while (true)
 			{
 				Console.Clear();
+				Console.WriteLine("Huidige datum: " + DateTime.Now);
 
-				string invoerbezoeker = "1";
-				switch (invoerbezoeker)
+
+				int nummer = 1;
+				foreach (Rondleiding rondleiding in LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
 				{
-					case "1":
-						Console.Clear();
-						var dateNu = DateTime.Now;
-                        Console.WriteLine("Huidige datum: " + dateNu + "\n");
+					int reserveringenC = LijstVanReserveringen.Where(x => x.tijd == rondleiding.tijd).Count();
+					Console.WriteLine($"[{nummer}] Rondleiding van {rondleiding.tijd} || plaatsen beschikbaar: {rondleiding.capaciteit - reserveringenC}");
+					nummer++;
+				}
 
-						int nummer = 1;
-						foreach (Rondleiding rondleiding in LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
+				Console.Write("\n\nSelecteer een rondleiding naar keuze: ");
+
+				string Anum1 = Console.ReadLine();
+				bool succesvolParsedc = int.TryParse(Anum1, out int num1);
+				while (succesvolParsedc != true)
+				{
+					Console.Write("Vul een code in bestaand uit cijfers a.u.b: ");
+					Anum1 = Console.ReadLine();
+					succesvolParsedc = int.TryParse(Anum1, out num1);
+				}
+
+				Console.Clear();
+				Console.Write("Door u geselecteerd: " + Check(num1 - 1).tijd + " \n\nVoer uw unieke ticket code in: ");
+
+				string Acode1 = Console.ReadLine();
+				bool succesvolParsedb = int.TryParse(Acode1, out int Acode);
+				while (succesvolParsedb != true)
+				{
+					Console.Clear();
+					Console.WriteLine("Door u geselecteerd: " + Check(num1 - 1).tijd);
+					Console.Write("Uw invoer is niet correct, vul afstublieft een code in bestaand uit cijfers: ");
+					Acode1 = Console.ReadLine();
+					succesvolParsedb = int.TryParse(Acode1, out Acode);
+				}
+
+
+
+				bool returnvalue = (CodeControle(Acode));
+
+				var checkCodeLijst = LijstVanReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
+
+				if (returnvalue == true)
+				{
+					if (checkCodeLijst == null)
+					{
+						if (Check(num1 - 1).capaciteit > LijstVanReserveringen.Where(x => x.tijd == Check(num1 - 1).tijd && x.datum == DateTime.Now.Date).Count())
 						{
-							int reserveringenC = LijstReserveringen.Where(x => x.tijd == rondleiding.tijd).Count();
-							Console.WriteLine($"[{nummer}] Rondleiding van {rondleiding.tijd} || plekken vrij {rondleiding.capaciteit - reserveringenC}");
-							nummer++;
-						}
+							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(num1 - 1).tijd));
+							LijstVanReserveringen.Add(reserveringdepot);
 
-						Console.WriteLine("Selecteer een rondleiding naar keuze doet het weer");
-
-						string Anum1 = Console.ReadLine();
-						bool succesvolParsedc = int.TryParse(Anum1, out int num1);
-						while (succesvolParsedc != true)
-                        {
-							Console.WriteLine("Vul een code in bestaand uit cijfers a.u.b.");
-							Anum1 = Console.ReadLine();
-							succesvolParsedc = int.TryParse(Anum1, out num1);
-						}
-
-
-						Console.Clear();
-						Console.WriteLine("Door u geselecteerd :" + Check(num1-1).tijd);
-						Console.WriteLine("\nVoer uw unieke ticket code in");
-
-
-
-
-						string Acode1 = Console.ReadLine();
-						bool succesvolParsedb = int.TryParse(Acode1, out int Acode);
-						while (succesvolParsedb != true)
-                        {
-							Console.WriteLine("Uw invoer is niet correct, vul afstublieft een code in bestaand uit cijfers");
-							Acode1 = Console.ReadLine();
-							succesvolParsedb = int.TryParse(Acode1, out Acode);
-						}
-
-
-						bool returnvalue = (CodeControle(Acode));
-
-						var checkCodeLijst = LijstReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
-
-						if (returnvalue == true)
-						{
-							if (checkCodeLijst == null)
-							{
-								if (Check(num1 - 1).capaciteit > LijstReserveringen.Where(x => x.tijd == Check(num1 - 1).tijd && x.datum == DateTime.Now.Date).Count())
-								{
-									Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(num1 - 1).tijd));
-									LijstReserveringen.Add(reserveringdepot);
-
-									Console.Clear();
-									Console.WriteLine("Opgeslagen, toets [Enter] om terug te gaan");
-									Console.ReadLine();
-								}
-
-								else
-								{
-									Console.WriteLine("Deze rondleiding zit helaas vol, toets enter om terug te gaan");
-									Console.ReadLine();
-
-								}
-
-							} 
-							else
-							{
-								Console.WriteLine($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Klik [Enter] om terug te gaan naar de startpagina ");
-								Console.ReadLine();
-							}
-
+							Console.Clear();
+							Console.WriteLine("Opgeslagen, toets [Enter] om terug te gaan");
+							Console.ReadLine();
 						}
 						else
 						{
-							Console.WriteLine($"Code is niet geldig, toets [enter] om terug te gaan ");
+							Console.WriteLine("Deze rondleiding zit helaas vol, toets enter om terug te gaan");
 							Console.ReadLine();
-						}
-						break;
 
-					default:
-						Console.WriteLine("invoer onjuist , selecteer een van bovenstaande opties aub");
-						break;
+						}
+					}
+					else
+					{
+						Console.WriteLine($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Klik [Enter] om terug te gaan naar de startpagina ");
+						Console.ReadLine();
+					}
+				}
+				else
+				{
+					Console.WriteLine($"Code is niet geldig, toets [enter] om terug te gaan ");
+					Console.ReadLine();
 				}
 
-	
+
+
+
 				using (StreamWriter file = File.CreateText(@"rondleidingen.json"))
 				{
 					JsonSerializer serializer = new JsonSerializer();
-					serializer.Serialize(file, LijstRondleidingen);
+					serializer.Serialize(file, LijstVanRondleidingen);
 				}
 
 				using (StreamWriter file = File.CreateText(@"reserveringen.json"))
 				{
 					JsonSerializer serializer = new JsonSerializer();
-					serializer.Serialize(file, LijstReserveringen);
+					serializer.Serialize(file, LijstVanReserveringen);
 				}
+
+
+
+
+
+
 				return 0;
 			}
 			
 		}
+
+
+
+
+
+
+
+
 
 		static bool CodeControle(int code)
 		{
@@ -151,26 +153,13 @@ namespace ProjectDepotTwo
 			return answer;
 		}
 
-
-		static void GeselecteerdeTijd()
-		{
-			var Vandaag = DateTime.Today;
-			var reservering11uur = Vandaag.AddHours(11);
-			var reservering12uur = Vandaag.AddHours(12);
-			var reservering13uur = Vandaag.AddHours(13);
-			var reservering14uur = Vandaag.AddHours(13);
-			var reservering15uur = Vandaag.AddHours(13);
-			var reservering16uur = Vandaag.AddHours(13);
-			var reservering17uur = Vandaag.AddHours(13);
-		}
-
 		Rondleiding Check(int tijdoptie)
         {
-			int q = LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date).Count();
+			int q = LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date).Count();
 			Rondleiding[] rondleidingen = new Rondleiding[q];
 
 			int i = 0;
-			foreach (Rondleiding rondleiding in LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
+			foreach (Rondleiding rondleiding in LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
             {
 				rondleidingen[i] = rondleiding;
 				i++;

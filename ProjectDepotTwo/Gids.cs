@@ -6,22 +6,22 @@ using Newtonsoft.Json;
 
 namespace ProjectDepotTwo
 {
-	public class Gids
+	public class ApplicatieComponentGids
 	{
-		Bezoeker bezoeker = new Bezoeker();
+		ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();  
 
 		public int GidsMenu()
         {
-			using (StreamReader r = new StreamReader(@"Rondleidingen.json"))
+			using (StreamReader rondleidingenJson = new StreamReader(@"Rondleidingen.json"))
 			{
-				string json = r.ReadToEnd();
-				bezoeker.LijstRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(json);
+				string stringRondleidingen = rondleidingenJson.ReadToEnd();
+				bezoeker.LijstVanRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(stringRondleidingen); 
 
 			}
 			using (StreamReader r = new StreamReader(@"Reserveringen.json"))
 			{
 				string json = r.ReadToEnd();
-				bezoeker.LijstReserveringen = JsonConvert.DeserializeObject<List<Reservering>>(json);
+				bezoeker.LijstVanReserveringen = JsonConvert.DeserializeObject<List<Reservering>>(json);
 			}
 			while (true)
             {
@@ -32,7 +32,7 @@ namespace ProjectDepotTwo
 				{
 					case "1":
 						Console.Clear();
-						var check = bezoeker.LijstRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
+						var check = bezoeker.LijstVanRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
 
 						if (check != null)
 						{
@@ -54,11 +54,11 @@ namespace ProjectDepotTwo
 								{
 									break;
 								}
-								else if (bezoeker.LijstReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour) != null)
+								else if (bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour) != null)
 								{
-									Console.WriteLine("Je mag een labjas\n Druk op [ENTER] voor de volgende");
+									Console.WriteLine("Je mag een lab jas\n Druk op [ENTER] voor de volgende");
 								}
-								else if (bezoeker.LijstReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour != DateTime.Now.Hour) != null)
+								else if (bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour != DateTime.Now.Hour) != null)
                                 {
 									Console.WriteLine("Code is gebruikt voor een andere rondleiding, klik enter om het opnieuw te proberen");
 								}
@@ -84,9 +84,9 @@ namespace ProjectDepotTwo
 					case "10":
 						Console.Clear();
 						int nummer = 1;
-						foreach (Rondleiding rondleiding in bezoeker.LijstRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
+						foreach (Rondleiding rondleiding in bezoeker.LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
 						{
-							int reserveringenoprondleiding = bezoeker.LijstReserveringen.Where(x => x.tijd == rondleiding.tijd).Count();
+							int reserveringenoprondleiding = bezoeker.LijstVanReserveringen.Where(x => x.tijd == rondleiding.tijd).Count();
 							Console.WriteLine($"[{nummer}] Rondleiding van {rondleiding.tijd} || plekken vrij: {rondleiding.capaciteit - reserveringenoprondleiding}");
 							nummer++;
 
@@ -97,18 +97,15 @@ namespace ProjectDepotTwo
 
 					case "0":
 						break;
+
 					default:
 						Console.WriteLine("invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
 
 						break;
-				
 				}
-				return 0;
-								
+				return 0;				
 			}
-
 		}
-		
 	}
 }
 

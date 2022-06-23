@@ -13,10 +13,10 @@ namespace ProjectDepotTwo
             int Pagina = 0;
             while (Pagina != -1)
             {
-                Bezoeker bezoeker = new Bezoeker();
-                Gids gids = new Gids();
+                ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();
+                ApplicatieComponentGids gids = new ApplicatieComponentGids();
 
-                switch (Pagina)                                                 /// Switch statement voor de menu's
+                switch (Pagina)                                                 
                 {
                     case 0:
                         Pagina = StartMenuDepot();
@@ -32,12 +32,15 @@ namespace ProjectDepotTwo
         }
 
 
-        private static int StartMenuDepot()                                     /// Startmenu 
+
+
+
+        private static int StartMenuDepot()                                     
         {
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine(" Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids");
+                Console.Write("Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids\n\nSelecteer uw optie :");
 
                 string invoergebruiker = Console.ReadLine();
                 switch (invoergebruiker)
@@ -55,37 +58,3 @@ namespace ProjectDepotTwo
         }
     }
 }
-/*
-
-                }
-                else if (Reservering.tijd == reservering12uur)
-                {
-                    --bezoekerslimit12uur;
-                }
-                else if (Reservering.tijd == reservering13uur)
-                {
-                    --bezoekerslimit13uur;
-                }
-                else if (Reservering.tijd == reservering14uur)
-                {
-                    --bezoekerslimit14uur;
-                }
-                else if (Reservering.tijd == reservering15uur)
-                {
-                    --bezoekerslimit15uur;
-                }
-
-                else if (Reservering.tijd == reservering16uur)
-                {
-                    --bezoekerslimit16uur;
-                }
-                else if (Reservering.tijd == reservering17uur)
-                {
-                    --bezoekerslimit17uur;
-                }
-
-            }
-            return false;
-
-
-*/
