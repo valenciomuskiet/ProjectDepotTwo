@@ -6,27 +6,23 @@ using Newtonsoft.Json;
 
 namespace ProjectDepotTwo
 {
-	public class ApplicatieComponentBezoeker
+	public class ApplicatieComponentBezoeker : Reservering
 	{
 		public List<Rondleiding> LijstVanRondleidingen { get; set; }
 		public List<Reservering> LijstVanReserveringen { get; set; }
-
 
 		public ApplicatieComponentBezoeker()
 		{
 			LijstVanRondleidingen = new List<Rondleiding>();
 			LijstVanReserveringen = new List<Reservering>();
 		}
-
-		public int BezoekersMenu()                                                                  
+		public int BezoekersComponent()
 		{
 			using (StreamReader RondleidingenJson = new StreamReader(@"Rondleidingen.json"))
 			{
 				string stringRondleidingen = RondleidingenJson.ReadToEnd();
 				LijstVanRondleidingen = JsonConvert.DeserializeObject<List<Rondleiding>>(stringRondleidingen);
-
 			}
-			
 			using (StreamReader ReserveringenJson = new StreamReader(@"Reserveringen.json"))
 			{
 				string stringReserveringen = ReserveringenJson.ReadToEnd();
@@ -34,14 +30,10 @@ namespace ProjectDepotTwo
 			}
 
 
-
-
-
 			while (true)
 			{
 				Console.Clear();
 				Console.WriteLine("Huidige datum: " + DateTime.Now);
-
 
 				int nummer = 1;
 				foreach (Rondleiding rondleiding in LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
@@ -52,9 +44,9 @@ namespace ProjectDepotTwo
 				}
 
 				Console.Write("\n\nSelecteer een rondleiding naar keuze: ");
-
 				string Anum1 = Console.ReadLine();
 				bool succesvolParsedc = int.TryParse(Anum1, out int num1);
+
 				while (succesvolParsedc != true)
 				{
 					Console.Write("Vul een code in bestaand uit cijfers a.u.b: ");
@@ -77,9 +69,10 @@ namespace ProjectDepotTwo
 				}
 
 
+				bool aRondleidinggestart = false;
 
-				bool returnvalue = (CodeControle(Acode));
-
+				(int codegetal, bool returnvalue) = Reservering.CodeValidatie(Acode);
+			
 				var checkCodeLijst = LijstVanReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
 
 				if (returnvalue == true)
@@ -88,7 +81,7 @@ namespace ProjectDepotTwo
 					{
 						if (Check(num1 - 1).capaciteit > LijstVanReserveringen.Where(x => x.tijd == Check(num1 - 1).tijd && x.datum == DateTime.Now.Date).Count())
 						{
-							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(num1 - 1).tijd));
+							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(num1 - 1).tijd, aRondleidinggestart));
 							LijstVanReserveringen.Add(reserveringdepot);
 
 							Console.Clear();
@@ -99,7 +92,6 @@ namespace ProjectDepotTwo
 						{
 							Console.WriteLine("Deze rondleiding zit helaas vol, toets enter om terug te gaan");
 							Console.ReadLine();
-
 						}
 					}
 					else
@@ -113,10 +105,6 @@ namespace ProjectDepotTwo
 					Console.WriteLine($"Code is niet geldig, toets [enter] om terug te gaan ");
 					Console.ReadLine();
 				}
-
-
-
-
 				using (StreamWriter file = File.CreateText(@"rondleidingen.json"))
 				{
 					JsonSerializer serializer = new JsonSerializer();
@@ -128,44 +116,22 @@ namespace ProjectDepotTwo
 					JsonSerializer serializer = new JsonSerializer();
 					serializer.Serialize(file, LijstVanReserveringen);
 				}
-
-
-
-
-
-
 				return 0;
 			}
-			
-		}
-
-
-
-
-
-
-
-
-
-		static bool CodeControle(int code)
-		{
-			bool answer = code % 17 == 0;
-			return answer;
 		}
 
 		Rondleiding Check(int tijdoptie)
-        {
+		{
 			int q = LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date).Count();
 			Rondleiding[] rondleidingen = new Rondleiding[q];
 
 			int i = 0;
 			foreach (Rondleiding rondleiding in LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date))
-            {
+			{
 				rondleidingen[i] = rondleiding;
 				i++;
-            }
+			}
 			return rondleidingen[tijdoptie];
-        }
+		}
 	}
 }
-
