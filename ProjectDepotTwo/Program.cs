@@ -16,7 +16,7 @@ namespace ProjectDepotTwo
             int component = 0;
             while (component != -1)
             {
-                switch (component)                                                 
+                switch (component)
                 {
                     case 0:
                         component = StartSchermComponent();             // startscherm 
@@ -31,7 +31,7 @@ namespace ProjectDepotTwo
             }
         }
 
-        private static int StartSchermComponent()                       
+        private static int StartSchermComponent()
         {
             {
                 while (true)
@@ -49,10 +49,9 @@ namespace ProjectDepotTwo
                             Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
                             Console.ReadLine();
                             break;
-
                     }
                 }
             }
         }
-	}
+    }
 }

@@ -95,8 +95,6 @@ namespace ProjectDepotTwo
 			}
 		}
 
-
-
 		/// methods 
 
 		public void serializeJson()
@@ -115,4 +113,3 @@ namespace ProjectDepotTwo
 		}
 	}
 }
-

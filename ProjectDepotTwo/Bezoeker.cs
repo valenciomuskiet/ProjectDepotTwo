@@ -61,7 +61,7 @@ namespace ProjectDepotTwo
 					succesvolParsedb = int.TryParse(Acode1, out Acode);
 				}
 				bool aRondleidinggestart = false;
-				(int codegetal, bool returnvalue) = CodeValidatie(Acode);
+				(int codegetal, bool returnvalue) = Reservering.CodeValidatie(Acode);
 				var checkCodeLijst = LijstVanReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
 				if (returnvalue == true)
 				{
@@ -110,25 +110,6 @@ namespace ProjectDepotTwo
 				return 0;
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		/// methods
 
 
@@ -148,16 +129,6 @@ namespace ProjectDepotTwo
 			return rondleidingen[tijdoptie];
 		}
 
-		public static new (int codegetal, bool returnvalue) CodeValidatie(int code)
-		{
-			if (code % 17 == 0)
-			{
-				return (code, true);
-			}
-			else
-			{
-				return (code, false);
-			}
-		}
+
 	}
 }
