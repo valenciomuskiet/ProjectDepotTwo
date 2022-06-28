@@ -10,6 +10,7 @@ namespace ProjectDepotTwo
     {
         static void Main()
         {
+<<<<<<< Updated upstream
 
             int component = 0;
             while (component != -1)
@@ -18,6 +19,14 @@ namespace ProjectDepotTwo
                 ApplicatieComponentGids gids = new ApplicatieComponentGids();
 
                 switch (component)                                                 
+=======
+            ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();  
+            ApplicatieComponentGids gids = new ApplicatieComponentGids();              
+            int component = 0;
+            while (component != -1)
+            {
+                switch (component)
+>>>>>>> Stashed changes
                 {
                     case 0:
                         component = StartSchermComponent();
@@ -31,9 +40,13 @@ namespace ProjectDepotTwo
                 }
             }
         }
+<<<<<<< Updated upstream
 
 
         private static int StartSchermComponent()                                     
+=======
+        private static int StartSchermComponent()                       
+>>>>>>> Stashed changes
         {
             {
                 while (true)
@@ -49,7 +62,7 @@ namespace ProjectDepotTwo
                         case "2":
                             return 2;
                         default:
-                            Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
+                            Console.WriteLine("Invoer onjuist. Toets [Enter] om het opnieuw te proberen");
                             Console.ReadLine();
                             break;
                     }
