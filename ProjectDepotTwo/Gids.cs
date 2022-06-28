@@ -30,10 +30,10 @@ namespace ProjectDepotTwo
 				string invoergids = Console.ReadLine();
 				switch (invoergids)
 				{
-					case "0":
+					case "1":
 						return 0;
 
-					case "1":
+					case "2":
 						Console.Clear();
 						var check = bezoeker.LijstVanRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
 
@@ -48,7 +48,9 @@ namespace ProjectDepotTwo
 
 								while (succesvolParsed != true)
 								{
-									Console.WriteLine("Uw invoer is niet correct. Vul afstublieft een code in bestaand uit cijfers");
+									Console.Clear();
+									Console.WriteLine($"Rondleiding van {check.tijd} gestart\nVul de codes in voor deze rondleiding: \nToets [1] Om uit dit menu");
+									Console.Write("Uw invoer is niet correct. Vul afstublieft een code in bestaand uit cijfers: ");
 									input = Console.ReadLine();
 									succesvolParsed = int.TryParse(input, out e);
 								}
@@ -88,7 +90,7 @@ namespace ProjectDepotTwo
 						break;
 
 					default:
-						Console.WriteLine("Invoer onjuist. Selecteer een van bovenstaande opties a.u.b.");
+						Console.WriteLine("Invoer onjuist. Toets [Enter] en probeer het opnieuw");
 						Console.ReadLine();
 						break;
 				}

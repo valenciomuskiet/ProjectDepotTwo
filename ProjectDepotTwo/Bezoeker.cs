@@ -44,9 +44,10 @@ namespace ProjectDepotTwo
 				bool succesvolParsedStringNaarInt = int.TryParse(gekozeRondleiding, out int rondleidingkeuzeVanBezoeker);
 				if (succesvolParsedStringNaarInt != true | rondleidingkeuzeVanBezoeker > alleRondleidingenVanVandaag | rondleidingkeuzeVanBezoeker < 1)
 				{
-					Console.Write("[] Keuze is niet geldig. Selecteer een van bovenstaande opties a.u.b: ");
+					Console.Write("[] Keuze is niet geldig. Toets [Enter] om het opnieuw te proberen ");
 					gekozeRondleiding = Console.ReadLine();
 					return 1;
+
 				}
 
 				Console.Clear();

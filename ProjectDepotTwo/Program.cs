@@ -46,7 +46,7 @@ namespace ProjectDepotTwo
                         case "2":
                             return 2;
                         default:
-                            Console.WriteLine("Invoer onjuist, selecteer een van bovenstaande opties a.u.b.");
+                            Console.WriteLine("Invoer onjuist. Toets [enter]dew en probeer het opnieuw");
                             Console.ReadLine();
                             break;
                     }
