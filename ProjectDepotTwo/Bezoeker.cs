@@ -42,6 +42,8 @@ namespace ProjectDepotTwo
 				Console.Write("\n\nSelecteer een rondleiding naar keuze: ");
 				string gekozeRondleiding = Console.ReadLine();
 				bool succesvolParsedStringNaarInt = int.TryParse(gekozeRondleiding, out int rondleidingkeuzeVanBezoeker);
+
+
 				if (succesvolParsedStringNaarInt != true | rondleidingkeuzeVanBezoeker > alleRondleidingenVanVandaag | rondleidingkeuzeVanBezoeker < 1)
 				{
 					Console.Write("[] Keuze is niet geldig. Toets [Enter] om het opnieuw te proberen ");
@@ -49,6 +51,7 @@ namespace ProjectDepotTwo
 					return 1;
 
 				}
+
 
 				Console.Clear();
 				Console.Write("Door u geselecteerd: " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + " \n\nVoer uw unieke ticket code in: ");
@@ -60,6 +63,7 @@ namespace ProjectDepotTwo
 					Console.Write("Door u geselecteerd: " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + "\n\nUw invoer is niet correct. Typ een code bestaand uit cijfers a.u.b. :  ");
 					Acode1 = Console.ReadLine();
 					succesvolParsedb = int.TryParse(Acode1, out Acode);
+
 				}
 				bool aRondleidinggestart = false;
 				(int codegetal, bool returnvalue) = Reservering.CodeValidatie(Acode);
@@ -73,46 +77,45 @@ namespace ProjectDepotTwo
 							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(rondleidingkeuzeVanBezoeker - 1).tijd, aRondleidinggestart));
 							LijstVanReserveringen.Add(reserveringdepot);
 							Console.Clear();
-							Console.Write("Opgeslagen. Toets [Enter] om terug te gaan.");
+							Console.Write("Bedankt voor uw reservering. Toets [Enter] om terug te gaan.");
 							Console.ReadLine();
-							//return 1;
+
+							using (StreamWriter file = File.CreateText(@"Rondleidingen.json"))
+							{
+								JsonSerializer serializer = new JsonSerializer();
+								serializer.Serialize(file, LijstVanRondleidingen);
+							}
+
+							using (StreamWriter file = File.CreateText(@"Reserveringen.json"))
+							{
+								JsonSerializer serializer = new JsonSerializer();
+								serializer.Serialize(file, LijstVanReserveringen);
+							}
+							return 1;
 						}
 						else
 						{
 							Console.Write("Deze rondleiding zit helaas vol. Toets [Enter] om terug te gaan. ");
 							Console.ReadLine();
-							//return 1;
+							return 1;
 						}
 					}
 					else
 					{
 						Console.Write($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Toets [Enter] om terug te gaan.");
 						Console.ReadLine();
-						//return 1;
+						return 1;
 					}
 				}
 				else
 				{
 					Console.WriteLine($"Code is niet geldig. Toets [Enter] om terug te gaan. ");
 					Console.ReadLine();
-					// return1;
-				}
-				using (StreamWriter file = File.CreateText(@"Rondleidingen.json"))
-				{
-					JsonSerializer serializer = new JsonSerializer();
-					serializer.Serialize(file, LijstVanRondleidingen);
-				}
-
-				using (StreamWriter file = File.CreateText(@"Reserveringen.json"))
-				{
-					JsonSerializer serializer = new JsonSerializer();
-					serializer.Serialize(file, LijstVanReserveringen);
-				}
-				return 0;
+					return 1;
+				}		
 			}
 		}
 		/// methods
-
 
 		Rondleiding Check(int tijdoptie)
 		{

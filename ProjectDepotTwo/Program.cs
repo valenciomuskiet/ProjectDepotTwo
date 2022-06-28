@@ -9,6 +9,7 @@ namespace ProjectDepotTwo
 {
     public class Program
     {
+
         static void Main()
         {
             ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();  // declaring bezoekersdeel

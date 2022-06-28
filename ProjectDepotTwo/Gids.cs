@@ -30,6 +30,7 @@ namespace ProjectDepotTwo
 				string invoergids = Console.ReadLine();
 				switch (invoergids)
 				{
+
 					case "1":
 						return 0;
 
@@ -80,6 +81,7 @@ namespace ProjectDepotTwo
 									Console.WriteLine("\nDruk op enter om een andere code te proberen");
 								}
 								Console.ReadLine();
+								return 2;
 							}
 						}
 						else

@@ -3,6 +3,7 @@ namespace ProjectDepotTwo
 {
 	public class Rondleiding
 	{
+
 		public Rondleiding() { }
 		public int capaciteit { get; set; }
 		public DateTime datum { get; set; }
