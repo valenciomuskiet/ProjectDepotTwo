@@ -12,21 +12,21 @@ namespace ProjectDepotTwo
 
         static void Main()
         {
-            ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();  // declaring bezoekersdeel
-            ApplicatieComponentGids gids = new ApplicatieComponentGids();              // declaring gidsdeel
+            ApplicatieComponentBezoeker bezoeker = new ApplicatieComponentBezoeker();  
+            ApplicatieComponentGids gids = new ApplicatieComponentGids();              
             int component = 0;
             while (component != -1)
             {
                 switch (component)
                 {
                     case 0:
-                        component = StartSchermComponent();             // startscherm 
+                        component = StartSchermComponent();            
                         break;
                     case 1:
-                        component = bezoeker.BezoekersComponent();      // Bezoekers deel
+                        component = bezoeker.BezoekersComponent();      
                         break;
                     case 2:
-                        component = gids.GidsComponent();               // gids deel
+                        component = gids.GidsComponent();              
                         break;
                 }
             }
@@ -47,7 +47,7 @@ namespace ProjectDepotTwo
                         case "2":
                             return 2;
                         default:
-                            Console.WriteLine("Invoer onjuist. Toets [enter]dew en probeer het opnieuw");
+                            Console.WriteLine("Invoer onjuist. Toets [enter] en probeer het opnieuw.");
                             Console.ReadLine();
                             break;
                     }

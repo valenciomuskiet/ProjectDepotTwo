@@ -23,6 +23,7 @@ namespace ProjectDepotTwo
 			tijd = aTijd;
 			rondleidinggestart = aRondleidinggestart;
 		}
+
 		public static (int codegetal, bool returnvalue) CodeValidatie(int code)
 		{
 			if (code % 17 == 0)

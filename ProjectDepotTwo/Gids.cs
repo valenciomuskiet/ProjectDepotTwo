@@ -55,7 +55,6 @@ namespace ProjectDepotTwo
 									input = Console.ReadLine();
 									succesvolParsed = int.TryParse(input, out e);
 								}
-
 								if (e == 1)
 								{
 									break;
@@ -98,9 +97,6 @@ namespace ProjectDepotTwo
 				}
 			}
 		}
-
-		/// methods 
-
 		public void serializeJson()
 		{
 			using (StreamWriter file = File.CreateText(@"Rondleidingen.json"))

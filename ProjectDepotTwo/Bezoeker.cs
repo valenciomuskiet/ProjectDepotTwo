@@ -77,7 +77,7 @@ namespace ProjectDepotTwo
 							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(rondleidingkeuzeVanBezoeker - 1).tijd, aRondleidinggestart));
 							LijstVanReserveringen.Add(reserveringdepot);
 							Console.Clear();
-							Console.Write("Bedankt voor uw reservering. Toets [Enter] om terug te gaan.");
+							Console.Write("Bedankt voor uw reservering bij het depot Boijmans van Beuningen! \nMeld u om " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + " bij uw gids in het entree deel van het Depot.\n\nToets [Enter] om dit scherm af te sluiten.");
 							Console.ReadLine();
 
 							using (StreamWriter file = File.CreateText(@"Rondleidingen.json"))
@@ -93,7 +93,7 @@ namespace ProjectDepotTwo
 							}
 							return 1;
 						}
-						else
+						else 
 						{
 							Console.Write("Deze rondleiding zit helaas vol. Toets [Enter] om terug te gaan. ");
 							Console.ReadLine();
@@ -109,7 +109,7 @@ namespace ProjectDepotTwo
 				}
 				else
 				{
-					Console.WriteLine($"Code is niet geldig. Toets [Enter] om terug te gaan. ");
+					Console.WriteLine($"De code voldoet niet aan de unieke code eisen. Toets [Enter] om terug te gaan. ");
 					Console.ReadLine();
 					return 1;
 				}		
