@@ -26,15 +26,11 @@ namespace ProjectDepotTwo
 			while (true)
 			{
 				Console.Clear();
-				Console.WriteLine("Gids\n\n[1] hoofdpagina \n[2] Start Rondleiding");
+				Console.WriteLine("[1] Start Rondleiding");
 				string invoergids = Console.ReadLine();
 				switch (invoergids)
 				{
-
 					case "1":
-						return 0;
-
-					case "2":
 						Console.Clear();
 						var check = bezoeker.LijstVanRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
 
@@ -43,7 +39,7 @@ namespace ProjectDepotTwo
 							while (true)
 							{
 								Console.Clear();
-								Console.WriteLine($"Rondleiding van {check.tijd} gestart\nVul de codes in voor deze rondleiding: \nToets [1] Om uit dit menu");
+								Console.WriteLine($"Rondleiding van {check.tijd} gestart\nVul de codes in voor deze rondleiding: \nToets [1] om de rondleiding te beeindigen");
 								string input = Console.ReadLine();
 								bool succesvolParsed = int.TryParse(input, out int e);
 
