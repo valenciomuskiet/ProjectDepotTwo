@@ -91,27 +91,27 @@ namespace ProjectDepotTwo
 								JsonSerializer serializer = new JsonSerializer();
 								serializer.Serialize(file, LijstVanReserveringen);
 							}
-							return 1;
+							return 1; // terug naar overzicht
 						}
 						else 
 						{
 							Console.Write("Deze rondleiding zit helaas vol. Toets [Enter] om terug te gaan. ");
-							Console.ReadLine();
-							return 1;
-						}
+							Console.ReadLine(); 
+							return 1; // terug naar overzicht
+						} 
 					}
 					else
 					{
 						Console.Write($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Toets [Enter] om terug te gaan.");
 						Console.ReadLine();
-						return 1;
+						return 1; // terug naar overzicht
 					}
 				}
 				else
 				{
 					Console.WriteLine($"De code voldoet niet aan de unieke code eisen. Toets [Enter] om terug te gaan. ");
 					Console.ReadLine();
-					return 1;
+					return 1; // terug naar overzicht
 				}		
 			}
 		}
