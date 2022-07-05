@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
-
 namespace ProjectDepotTwo
 {
     public class Program
@@ -32,13 +31,14 @@ namespace ProjectDepotTwo
             }
         }
 
+
         private static int StartSchermComponent()
         {
             {
                 while (true)
                 {
                     Console.Clear();
-                    Console.Write("Welkom bij het Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids\n\n\n\nSelecteer uw optie :");
+                    Console.Write("Welkom bij het Depot Boijmans Van Beuningen\n\n[1] Bezoeker\n[2] Gids\n\n\nToets uw optie :");
                     string invoergebruiker = Console.ReadLine();
                     switch (invoergebruiker)
                     {

@@ -25,29 +25,31 @@ namespace ProjectDepotTwo
 			}
 			while (true)
 			{
+
+				var check = bezoeker.LijstVanRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
 				Console.Clear();
-				Console.WriteLine("[1] Start Rondleiding");
+				Console.WriteLine($"Huidige tijd: " + DateTime.Now);
+				Console.Write($"Toets [1] om de eerstvolgende  te starten van bovenstaand uurvak : ");
 				string invoergids = Console.ReadLine();
 				switch (invoergids)
 				{
 					case "1":
 						Console.Clear();
-						var check = bezoeker.LijstVanRondleidingen.Find(x => x.tijd.Hour == DateTime.Now.Hour);
 
 						if (check != null)
 						{
 							while (true)
 							{
 								Console.Clear();
-								Console.WriteLine($"Rondleiding van {check.tijd} gestart\nVul de codes in voor deze rondleiding: \nToets [1] om de rondleiding te beeindigen");
+								Console.Write($"gestart: Rondleiding van {check.tijd}\nToets [1] om af te sluiten.\n\nVul de codes in voor deze rondleiding: ");
 								string input = Console.ReadLine();
 								bool succesvolParsed = int.TryParse(input, out int e);
 
 								while (succesvolParsed != true)
 								{
 									Console.Clear();
-									Console.WriteLine($"Rondleiding van {check.tijd} gestart\nVul de codes in voor deze rondleiding: \nToets [1] Om uit dit menu");
-									Console.Write("Uw invoer is niet correct. Vul afstublieft een code in bestaand uit cijfers: ");
+									Console.Write($"gestart: Rondleiding van {check.tijd}\nToets [1] om af te sluiten");
+									Console.Write("\n\nUw invoer is niet correct.\nToets een code in bestaand uit cijfers a.u.b : ");
 									input = Console.ReadLine();
 									succesvolParsed = int.TryParse(input, out e);
 								}
@@ -55,29 +57,42 @@ namespace ProjectDepotTwo
 								{
 									break;
 								}
-								else if (bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour && x.rondleidinggestart == false) != null)
+
+
+								else if (bezoeker.LijstVanReserveringen.Find
+									(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour && x.rondleidinggestart == false) != null)
 								{
-									bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour && x.rondleidinggestart == false).rondleidinggestart = true;
-									Console.WriteLine("U mag een lab jas\n Druk op [Enter] en geef mij door aan de volgende");
+									bezoeker.LijstVanReserveringen.Find
+									(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour && x.rondleidinggestart == false).rondleidinggestart = true;
+									Console.Write("\nU mag een lab jas\ntoets [Enter] en geef mij door aan de volgende.");
 									serializeJson();
 								}
-								else if (bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour == DateTime.Now.Hour && x.rondleidinggestart == true) != null)
+
+
+								else if (bezoeker.LijstVanReserveringen.Find
+									(x => x.code == e && x.datum == DateTime.Now.Date
+									&& x.tijd.Hour == DateTime.Now.Hour
+									&& x.rondleidinggestart == true) != null)
 								{
-									Console.WriteLine("U bent al gestart met deze rondleiding. Druk op [Enter] en geef mij door aan de volgende");
+									Console.Write("\nU bent al gestart met deze rondleiding.\nToets [Enter] en geef mij door aan de volgende.");
 								}
+
+
+
 								else if (bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Now.Date && x.tijd.Hour != DateTime.Now.Hour && x.rondleidinggestart == false) != null)
 								{
 									var checkCodeTijd = bezoeker.LijstVanReserveringen.Find(x => x.code == e && x.datum == DateTime.Today);
 
-									Console.WriteLine($"Met deze code is gereserveerd voor { checkCodeTijd.tijd}. Vul alleen code's in voor deze rondleiding a.u.b.");
+									Console.Write($"\nMet deze code is al gereserveerd voor { checkCodeTijd.tijd}. U mag geen labjas\nToets [Enter] en toets uw code voor deze rondleiding in. ");
 								}
 								else
 								{
-									Console.WriteLine("\nDruk op enter om een andere code te proberen");
+									Console.Write("\nCode onjuist.U mag geen labjas\nToets [Enter] en toets uw code juist in a.u.b.");
 								}
 								Console.ReadLine();
-								return 2;
+						
 							}
+
 						}
 						else
 						{

@@ -11,7 +11,6 @@ namespace ProjectDepotTwo
 		public List<Rondleiding> LijstVanRondleidingen { get; set; }
 		public List<Reservering> LijstVanReserveringen { get; set; }
 
-
 		public int BezoekersComponent()
 		{
 			using (StreamReader RondleidingenJson = new StreamReader(@"Rondleidingen.json"))
@@ -44,7 +43,7 @@ namespace ProjectDepotTwo
 				bool succesvolParsedStringNaarInt = int.TryParse(gekozeRondleiding, out int rondleidingkeuzeVanBezoeker);
 
 
-				if (succesvolParsedStringNaarInt != true | rondleidingkeuzeVanBezoeker > alleRondleidingenVanVandaag | rondleidingkeuzeVanBezoeker < 1)
+				if (succesvolParsedStringNaarInt != true || rondleidingkeuzeVanBezoeker > alleRondleidingenVanVandaag || rondleidingkeuzeVanBezoeker < 1)
 				{
 					Console.Write("[] Keuze is niet geldig. Toets [Enter] om het opnieuw te proberen ");
 					gekozeRondleiding = Console.ReadLine();
@@ -52,19 +51,19 @@ namespace ProjectDepotTwo
 
 				}
 
-
 				Console.Clear();
-				Console.Write("Door u geselecteerd: " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + " \n\nVoer uw unieke ticket code in: ");
+				Console.Write("Door u geselecteerd: " + RondleidingControle(rondleidingkeuzeVanBezoeker - 1).tijd + " \n\nVoer uw unieke ticket code in: ");
 				string Acode1 = Console.ReadLine();
 				bool succesvolParsedb = int.TryParse(Acode1, out int Acode);
 				while (succesvolParsedb != true)
 				{
 					Console.Clear();
-					Console.Write("Door u geselecteerd: " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + "\n\nUw invoer is niet correct. Typ een code bestaand uit cijfers a.u.b. :  ");
+					Console.Write("Door u geselecteerd: " + RondleidingControle(rondleidingkeuzeVanBezoeker - 1).tijd + "\n\nUw invoer is niet correct. Typ een code bestaand uit cijfers a.u.b. :  ");
 					Acode1 = Console.ReadLine();
 					succesvolParsedb = int.TryParse(Acode1, out Acode);
 
 				}
+
 				bool aRondleidinggestart = false;
 				(int codegetal, bool returnvalue) = Reservering.CodeValidatie(Acode);
 				var checkCodeLijst = LijstVanReserveringen.Find(x => x.code == Acode && x.datum == DateTime.Today);
@@ -72,12 +71,12 @@ namespace ProjectDepotTwo
 				{
 					if (checkCodeLijst == null)
 					{
-						if (Check(rondleidingkeuzeVanBezoeker - 1).capaciteit > LijstVanReserveringen.Where(x => x.tijd == Check(rondleidingkeuzeVanBezoeker - 1).tijd && x.datum == DateTime.Now.Date).Count())
+						if (RondleidingControle(rondleidingkeuzeVanBezoeker - 1).capaciteit > LijstVanReserveringen.Where(x => x.tijd == RondleidingControle(rondleidingkeuzeVanBezoeker - 1).tijd && x.datum == DateTime.Now.Date).Count())
 						{
-							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, Check(rondleidingkeuzeVanBezoeker - 1).tijd, aRondleidinggestart));
+							Reservering reserveringdepot = (new Reservering(Acode, DateTime.Today, RondleidingControle(rondleidingkeuzeVanBezoeker - 1).tijd, aRondleidinggestart));
 							LijstVanReserveringen.Add(reserveringdepot);
 							Console.Clear();
-							Console.Write("Bedankt voor uw reservering bij het depot Boijmans van Beuningen! \nMeld u om " + Check(rondleidingkeuzeVanBezoeker - 1).tijd + " bij uw gids in het entree deel van het Depot.\n\nToets [Enter] om dit scherm af te sluiten.");
+							Console.Write("Bedankt voor uw reservering bij het depot Boijmans van Beuningen! \nMeld u om " + RondleidingControle(rondleidingkeuzeVanBezoeker - 1).tijd + " bij uw gids in het entree deel van het Depot.\n\nToets [Enter] om dit scherm af te sluiten.");
 							Console.ReadLine();
 
 							using (StreamWriter file = File.CreateText(@"Rondleidingen.json"))
@@ -102,22 +101,21 @@ namespace ProjectDepotTwo
 					}
 					else
 					{
-						Console.Write($"Met deze code is al gereserveerd voor: {checkCodeLijst.tijd}. Toets [Enter] om terug te gaan.");
+						Console.Write($"\n\nMet deze code is al gereserveerd voor: {checkCodeLijst.tijd}.\nToets [Enter] om terug te gaan.");
 						Console.ReadLine();
 						return 1; // terug naar overzicht
 					}
 				}
 				else
 				{
-					Console.WriteLine($"De code voldoet niet aan de unieke code eisen. Toets [Enter] om terug te gaan. ");
+					Console.WriteLine($"De code voldoet niet aan de unieke code eisen. Toets [Enter] om terug te gaan en probeer opnieuw te reserveren. ");
 					Console.ReadLine();
 					return 1; // terug naar overzicht
 				}		
 			}
 		}
-		/// methods
 
-		Rondleiding Check(int tijdoptie)
+		Rondleiding RondleidingControle(int tijdoptie)
 		{
 			int q = LijstVanRondleidingen.Where(x => x.tijd.Hour > DateTime.Now.Hour && x.datum == DateTime.Now.Date).Count();
 			Rondleiding[] rondleidingen = new Rondleiding[q];
@@ -132,7 +130,6 @@ namespace ProjectDepotTwo
 			}
 			return rondleidingen[tijdoptie];
 		}
-
 
 	}
 }

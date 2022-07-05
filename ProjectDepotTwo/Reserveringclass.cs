@@ -8,7 +8,6 @@ namespace ProjectDepotTwo
 {
 	public class Reservering
 	{
-
 		public Reservering() { }
 
 		public int code { get; set; }
@@ -35,6 +34,7 @@ namespace ProjectDepotTwo
 				return (code, false);
 			}
 		}
+
 	}
 }
 
